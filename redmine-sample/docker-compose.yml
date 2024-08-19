@@ -32,3 +32,5 @@ services:
       - /var/www/redmine/files:/usr/src/redmine/files
       - /var/www/redmine/plugins:/usr/src/redmine/plugins
       - /var/www/redmine/public/themes:/usr/src/redmine/public/themes
+      - ./redmine/ap/config.ru:/usr/src/redmine/config.ru
+      - ./redmine/ap/environment.rb:/usr/src/redmine/config/environment.rb
