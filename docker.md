@@ -37,6 +37,46 @@ $ sudo apt install docker-ce
 $ sudo gpasswd -a ${USER} docker
 ```
 
+## ネットワーク設定
+
+### docker0の設定
+
+***/etc/docker/daemon.json***
+
+```json
+{
+    "bip": "172.20.0.254/24"
+}
+```
+
+!!! note
+    * docker環境からホスト環境へのネットワーク接続が可能な場合、本設定は不要です。
+    * 本設定を行う場合は、ホスト環境に設定されているネットワークアドレスと競合しないアドレスを設定します。
+
+
+### docker compose
+
+***docker-compose.yml***
+
+```yaml
+networks:
+  my-net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.100.0/24
+
+services:
+  redmine:
+    networks:
+      my-net:
+        ipv4_address: 192.168.100.10
+```
+
+!!! note
+    * docker環境からホスト環境へネットワーク接続が可能な場合、本設定は不要です。
+    * 本設定を行う場合、ホスト環境に設定されているネットワークアドレスと競合しないアドレスを設定します。
+
 ---
 
 ## Dockerコマンドの使い方
@@ -190,3 +230,4 @@ $ docker compose down -v
 ```
 $ docker compose rm <コンテナ名>
 ```
+
